@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import br.com.zago.exemplos.domain.Pedido;
 
 @Repository
-public interface PedidoRepository extends JpaRepository<Pedido, Long> {
+public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
 	
 	
 
