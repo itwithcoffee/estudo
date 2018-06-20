@@ -13,6 +13,7 @@ import br.com.zago.exemplos.domain.Cidade;
 import br.com.zago.exemplos.domain.Cliente;
 import br.com.zago.exemplos.domain.Endereco;
 import br.com.zago.exemplos.domain.Estado;
+import br.com.zago.exemplos.domain.ItemPedido;
 import br.com.zago.exemplos.domain.Pagamento;
 import br.com.zago.exemplos.domain.PagamentoComBoleto;
 import br.com.zago.exemplos.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import br.com.zago.exemplos.repository.CidadeRepository;
 import br.com.zago.exemplos.repository.ClienteRepository;
 import br.com.zago.exemplos.repository.EnderecoRepository;
 import br.com.zago.exemplos.repository.EstadoRepository;
+import br.com.zago.exemplos.repository.ItemPedidoRepository;
 import br.com.zago.exemplos.repository.PagamentoRepository;
 import br.com.zago.exemplos.repository.PedidoRepository;
 import br.com.zago.exemplos.repository.ProdutoRepository;
@@ -48,6 +50,8 @@ public class ExemplosApplication implements CommandLineRunner{
 	private PedidoRepository repositorioPedido;
 	@Autowired
 	private PagamentoRepository repositorioPagamento;
+	@Autowired
+	private ItemPedidoRepository repositorioItemPedido;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ExemplosApplication.class, args);
@@ -117,7 +121,18 @@ public class ExemplosApplication implements CommandLineRunner{
 		repositorioPedido.saveAll(Arrays.asList(ped1, ped2));
 		repositorioPagamento.saveAll(Arrays.asList(pagto1, pagto2));
 		
+		ItemPedido ip1 = new ItemPedido(ped1, prod1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, prod3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, prod2, 100.00, 1, 800.00);
 		
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		prod1.getItens().addAll(Arrays.asList(ip1));
+		prod2.getItens().addAll(Arrays.asList(ip3));
+		prod3.getItens().addAll(Arrays.asList(ip2));
+		
+		repositorioItemPedido.saveAll(Arrays.asList(ip1, ip2, ip3));
 		
 		
 	}
